@@ -1,72 +1,105 @@
-import { useState } from "react";
-import { Image, ScrollView, Text } from "react-native";
+import { FlatList, StyleSheet, SectionList, Text, View } from "react-native";
 
-type Logo = {
-  uri: string;
-  width: number;
-  height: number;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 30,
+    paddingTop: 22,
+  },
+  item: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
+  },
+  sectionHeader: {
+    paddingTop: 2,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 2,
+    fontSize: 14,
+    fontWeight: "bold",
+    backgroundColor: "rgba(247,247,247,1.0)",
+  },
+});
+
+type User = {
+  key: string;
 };
 
-const logo: Logo = {
-  uri: "https://reactnative.dev/img/tiny_logo.png",
-  width: 64,
-  height: 64,
-};
+const users: User[] = [
+  { key: "Devin" },
+  { key: "Dan" },
+  { key: "Dominic" },
+  { key: "Jackson" },
+  { key: "James" },
+  { key: "Joel" },
+  { key: "John" },
+  { key: "Jillian" },
+  { key: "Jimmy" },
+  { key: "Julie" },
+];
 
-type TextStyle = {
-  fontSize: number;
+type BasicItemProps = {
+  user: User;
 };
-
-const textStyle: TextStyle = {
-  fontSize: 96,
-};
-
-function ReactTinyLogo(): JSX.Element {
-  return <Image source={logo} />;
+function BasicItem({ user }: BasicItemProps): JSX.Element {
+  return <Text style={styles.item}>Name: {user.key}</Text>;
 }
 
-type LargeTextProps = {
-  children: any;
+type RenderItemType = {
+  item: User;
 };
-function LargeText({ children }: LargeTextProps): JSX.Element {
-  return <Text style={textStyle}>{children}</Text>;
+function FlatListBasics(): JSX.Element {
+  return (
+    <View style={styles.container}>
+      <Text>Flat List</Text>
+      <FlatList
+        data={users}
+        renderItem={({ item }: RenderItemType) => (
+          <BasicItem key={item.key} user={item} />
+        )}
+      />
+    </View>
+  );
 }
+
+const SectionListBasics = () => {
+  return (
+    <View style={styles.container}>
+      <Text>Section List</Text>
+      <SectionList
+        sections={[
+          { title: "D", data: ["Devin", "Dan", "Dominic"] },
+          {
+            title: "J",
+            data: [
+              "Jackson",
+              "James",
+              "Jillian",
+              "Jimmy",
+              "Joel",
+              "John",
+              "Julie",
+            ],
+          },
+        ]}
+        renderItem={({ item }) => <Text style={styles.item}>{item}</Text>}
+        renderSectionHeader={({ section }) => (
+          <Text style={styles.sectionHeader}>{section.title}</Text>
+        )}
+        keyExtractor={(item) => `basicListEntry-${item}`}
+      />
+    </View>
+  );
+};
 
 function FirstScreen(): JSX.Element {
   return (
-    <ScrollView>
-      <LargeText>Scroll me plz</LargeText>
-      <ReactTinyLogo />
-      <ReactTinyLogo />
-      <ReactTinyLogo />
-      <ReactTinyLogo />
-      <ReactTinyLogo />
-      <LargeText>If you like</LargeText>
-      <ReactTinyLogo />
-      <ReactTinyLogo />
-      <ReactTinyLogo />
-      <ReactTinyLogo />
-      <ReactTinyLogo />
-      <LargeText>Scrolling down</LargeText>
-      <ReactTinyLogo />
-      <ReactTinyLogo />
-      <ReactTinyLogo />
-      <ReactTinyLogo />
-      <ReactTinyLogo />
-      <LargeText>What's the best</LargeText>
-      <ReactTinyLogo />
-      <ReactTinyLogo />
-      <ReactTinyLogo />
-      <ReactTinyLogo />
-      <ReactTinyLogo />
-      <LargeText>Framework around?</LargeText>
-      <ReactTinyLogo />
-      <ReactTinyLogo />
-      <ReactTinyLogo />
-      <ReactTinyLogo />
-      <ReactTinyLogo />
-      <LargeText>React Native</LargeText>
-    </ScrollView>
+    <View style={styles.container}>
+      <Text>Hello, World!</Text>
+      <FlatListBasics />
+      <SectionListBasics />
+    </View>
   );
 }
 
