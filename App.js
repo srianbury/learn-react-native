@@ -1,20 +1,5 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { FirstScreen } from "./FirstScreen";
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Hello, React Native!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+  return <FirstScreen />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
