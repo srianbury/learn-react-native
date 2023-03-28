@@ -1,23 +1,25 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { useState } from "react";
+import { Text, View, TextInput } from "react-native";
 
 function FirstScreen(): JSX.Element {
+  const [text, setText] = useState<string>("");
+
   return (
-    <View style={styles.container}>
-      <Text>Hello, React Native!</Text>
-      <Text>Love, the first screen</Text>
-      <StatusBar style="auto" />
+    <View style={{ padding: 10 }}>
+      <TextInput
+        style={{ height: 40, marginTop: 40 }}
+        placeholder="Type here to translate..."
+        onChangeText={setText}
+        defaultValue={text}
+      />
+      <Text style={{ padding: 10, fontSize: 42 }}>
+        {text
+          .split(" ")
+          .map((word) => (word.trim() !== "" ? "🍕" : ""))
+          .join(" ")}
+      </Text>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
 
 export { FirstScreen };
